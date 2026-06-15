@@ -8,15 +8,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - uses: Platane/snk@v3
         id: snake-svg
         with:
-          github_user_name: ${{ github.repository_owner }}
+          github_user_name: pratheek1433-sudo
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: github-contribution-grid-snake
+          path: dist/
+
       - uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: output
